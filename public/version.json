@@ -1,0 +1,13 @@
+{
+  "version": "1.4.3",
+  "versionCode": 143,
+  "publishedAt": "2026-08-24T08:15:00.000Z",
+  "title": "Pembaruan Sistem Damdam Laundry",
+  "description": "Versi terbaru sistem telah dipublikasikan dengan fitur dan performa terbaru.",
+  "changelog": [
+    "Fitur hapus log pengajuan & keputusan izin libur (koreksi salah tanggal)",
+    "Peningkatan popup notifikasi pembaruan sistem yang ringkas di tengah layar",
+    "Optimasi sinkronisasi database dan pencatatan absensi"
+  ],
+  "forceReload": false
+}

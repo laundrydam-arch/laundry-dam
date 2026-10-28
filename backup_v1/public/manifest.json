@@ -1,0 +1,58 @@
+{
+  "name": "Damdam Laundry - Catatan Pengeluaran Laundry",
+  "short_name": "Damdam Laundry",
+  "description": "Aplikasi pencatatan dan analisis pengeluaran operasional usaha laundry Damdam Laundry dengan dukungan AI.",
+  "id": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121214",
+  "theme_color": "#10B981",
+  "orientation": "portrait",
+  "categories": ["finance", "business", "utilities"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/pwa_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pwa_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pwa_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot_narrow.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Damdam Laundry Mobile View"
+    },
+    {
+      "src": "/screenshot_wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Damdam Laundry Desktop View"
+    }
+  ]
+}

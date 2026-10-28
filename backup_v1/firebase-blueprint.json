@@ -1,0 +1,491 @@
+{
+  "entities": {
+    "expense": {
+      "title": "Expense",
+      "description": "Laundry operational expense entry",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of expense"
+        },
+        "title": {
+          "type": "string",
+          "description": "Operational description of the item"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount spent in Indonesian Rupiah"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category name associated with this transaction"
+        },
+        "date": {
+          "type": "string",
+          "description": "The date of expenditure in YYYY-MM-DD"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Payment method used (e.g. Tunai, Transfer, QRIS)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional annotation notes"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User UID who recorded this expense"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server creation timestamp"
+        }
+      },
+      "required": ["id", "title", "amount", "category", "date", "paymentMethod", "userId"]
+    },
+    "category": {
+      "title": "Category",
+      "description": "User customized expense category metadata",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human readable name of category"
+        },
+        "color": {
+          "type": "string",
+          "description": "Hex color code of category tag"
+        },
+        "bgColor": {
+          "type": "string",
+          "description": "Tailwind CSS style representation of active text and backgrounds"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Lucide icon name string representation"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User UID who customized this category"
+        }
+      },
+      "required": ["name", "color", "bgColor", "icon", "userId"]
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "User specific configurations and system limits",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "description": "Monthly budget limit threshold in Indonesian Rupiah"
+        }
+      },
+      "required": ["limit"]
+    },
+    "location": {
+      "title": "Location",
+      "description": "Outlet geolocation settings for validation",
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "description": "Center latitude of the laundry outlet"
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Center longitude of the laundry outlet"
+        },
+        "radius": {
+          "type": "number",
+          "description": "Maximum allowed attendance radius in meters"
+        },
+        "namaLokasi": {
+          "type": "string",
+          "description": "Human readable name of outlet location"
+        }
+      },
+      "required": ["latitude", "longitude", "radius", "namaLokasi"]
+    },
+    "karyawan": {
+      "title": "Karyawan",
+      "description": "Employee profiles with login and payroll specifications",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of employee"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Name of the employee"
+        },
+        "username": {
+          "type": "string",
+          "description": "Employee login username"
+        },
+        "password": {
+          "type": "string",
+          "description": "Employee login password"
+        },
+        "gajiPokok": {
+          "type": "number",
+          "description": "Basic salary in Indonesian Rupiah"
+        },
+        "uangMakan": {
+          "type": "number",
+          "description": "Daily food allowance in Indonesian Rupiah"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account registration ISO timestamp"
+        }
+      },
+      "required": ["id", "nama", "username", "password", "gajiPokok", "uangMakan"]
+    },
+    "absensi": {
+      "title": "Absensi",
+      "description": "Employee attendance logs with check-in/out and coordinates",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of log entry"
+        },
+        "karyawanId": {
+          "type": "string",
+          "description": "Employee ID who checked in"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Captured name of employee"
+        },
+        "tanggal": {
+          "type": "string",
+          "description": "Date of attendance in YYYY-MM-DD format"
+        },
+        "checkInTime": {
+          "type": "string",
+          "description": "Check-in ISO timestamp"
+        },
+        "checkOutTime": {
+          "type": "string",
+          "description": "Check-out ISO timestamp"
+        },
+        "latitudeIn": {
+          "type": "number",
+          "description": "Latitude at check-in"
+        },
+        "longitudeIn": {
+          "type": "number",
+          "description": "Longitude at check-in"
+        },
+        "latitudeOut": {
+          "type": "number",
+          "description": "Latitude at check-out"
+        },
+        "longitudeOut": {
+          "type": "number",
+          "description": "Longitude at check-out"
+        },
+        "distanceIn": {
+          "type": "number",
+          "description": "Checked-in distance to outlet center in meters"
+        },
+        "distanceOut": {
+          "type": "number",
+          "description": "Checked-out distance to outlet center in meters"
+        },
+        "status": {
+          "type": "string",
+          "description": "General daily attendance status (e.g. Hadir, Terlambat)"
+        }
+      },
+      "required": ["id", "karyawanId", "nama", "tanggal", "checkInTime", "latitudeIn", "longitudeIn", "status"]
+    },
+    "izin": {
+      "title": "Izin",
+      "description": "Employee leave or time-off approval requests",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of leave request"
+        },
+        "karyawanId": {
+          "type": "string",
+          "description": "Employee ID who requests leave"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Employee name who requests leave"
+        },
+        "tanggal": {
+          "type": "string",
+          "description": "The target date of leave in YYYY-MM-DD"
+        },
+        "alasan": {
+          "type": "string",
+          "description": "Detailed explanation of leave reason"
+        },
+        "status": {
+          "type": "string",
+          "description": "Approval status of leave request",
+          "enum": ["Pending", "Disetujui", "Ditolak"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp of request"
+        }
+      },
+      "required": ["id", "karyawanId", "nama", "tanggal", "alasan", "status", "createdAt"]
+    },
+    "user": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique identifier of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the user"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Profile picture URL of the user"
+        },
+        "lastActive": {
+          "type": "string",
+          "description": "Timestamp of last website activity"
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "Admin sub-users (pengelola) created by owner to delegate shop management tasks",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of admin"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Full name of admin user"
+        },
+        "username": {
+          "type": "string",
+          "description": "Admin unique login name"
+        },
+        "password": {
+          "type": "string",
+          "description": "Admin login password"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account registration timestamp"
+        }
+      },
+      "required": ["id", "nama", "username", "password"]
+    },
+    "customer": {
+      "title": "Customer",
+      "description": "Laundry customer profiles",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID of customer"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Full name of the customer"
+        },
+        "telepon": {
+          "type": "string",
+          "description": "Active WhatsApp telephone number"
+        },
+        "alamat": {
+          "type": "string",
+          "description": "Delivery address"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner userId who created this customer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO registration string"
+        }
+      },
+      "required": ["id", "nama", "telepon", "userId"]
+    },
+    "service": {
+      "title": "Service",
+      "description": "Types of laundry services offered",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID of service"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Service name (e.g., Cuci Setrika Kiloan)"
+        },
+        "tipe": {
+          "type": "string",
+          "description": "Calculation type: Kiloan, Satuan, Meter"
+        },
+        "harga": {
+          "type": "number",
+          "description": "Price per unit in IDR"
+        },
+        "durasiJam": {
+          "type": "number",
+          "description": "Estimated processing time in hours"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner userId"
+        }
+      },
+      "required": ["id", "nama", "tipe", "harga", "durasiJam", "userId"]
+    },
+    "transaction": {
+      "title": "Transaction",
+      "description": "Individual active laundry receipts with status tracking",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Formatted invoice ID (TRX/YYMMDD/xxxxx)"
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Copied name of customer"
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "WhatsApp contact of customer"
+        },
+        "layananId": {
+          "type": "string",
+          "description": "Chosen laundry service ID"
+        },
+        "layananNama": {
+          "type": "string",
+          "description": "Subscribed service name"
+        },
+        "parfum": {
+          "type": "string",
+          "description": "Scent preference of parfum"
+        },
+        "berat": {
+          "type": "number",
+          "description": "Weight in Kg or item count"
+        },
+        "totalHarga": {
+          "type": "number",
+          "description": "Resulting aggregate cost of laundry in IDR"
+        },
+        "status": {
+          "type": "string",
+          "description": "Operational cycle: Antrian, Proses, Selesai, Diambil, Batal"
+        },
+        "statusBayar": {
+          "type": "string",
+          "description": "Lunas or Belum Lunas"
+        },
+        "pembayaranMetode": {
+          "type": "string",
+          "description": "Cash flow source: Tunai, QRIS, Transfer"
+        },
+        "tanggalMasuk": {
+          "type": "string",
+          "description": "Reception datetime"
+        },
+        "estimasiSelesai": {
+          "type": "string",
+          "description": "Dynamic promise completion datetime"
+        },
+        "tanggalSelesai": {
+          "type": "string",
+          "description": "Datetime when operator marked completed"
+        },
+        "tanggalDiambil": {
+          "type": "string",
+          "description": "Datetime when items returned to customer"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Service anomalies or specific notes"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Operator/Owner UID"
+        }
+      },
+      "required": ["id", "customerName", "customerPhone", "layananId", "layananNama", "berat", "totalHarga", "status", "statusBayar", "tanggalMasuk", "estimasiSelesai", "userId"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "user",
+      "description": "Root user profile record to anchor subcollections and make the user document physically visible in the Firestore console"
+    },
+    "users/{userId}/expenses/{expenseId}": {
+      "schema": "expense",
+      "description": "Individual expense records associated with the user"
+    },
+    "users/{userId}/categories/{categoryName}": {
+      "schema": "category",
+      "description": "Customized category options registered by the laundry user"
+    },
+    "users/{userId}/settings/{settingId}": {
+      "schema": "settings",
+      "description": "System limits and user budget metadata"
+    },
+    "users/{userId}/settings/location": {
+      "schema": "location",
+      "description": "Outlet location configuration parameters"
+    },
+    "users/{userId}/karyawan/{karyawanId}": {
+      "schema": "karyawan",
+      "description": "Employee database register managed by owner"
+    },
+    "users/{userId}/absensi/{absensiId}": {
+      "schema": "absensi",
+      "description": "Employee check-in logging logs"
+    },
+    "users/{userId}/izin/{izinId}": {
+      "schema": "izin",
+      "description": "Leave requests submitted by staff and moderated by owner"
+    },
+    "users/{userId}/admins/{adminId}": {
+      "schema": "admin",
+      "description": "Admin sub-users registered and managed directly by the laundry owner"
+    },
+    "users/{userId}/customers/{customerId}": {
+      "schema": "customer",
+      "description": "Registered customer base folder"
+    },
+    "users/{userId}/services/{serviceId}": {
+      "schema": "service",
+      "description": "Active price list items and variants"
+    },
+    "users/{userId}/transactions/{transactionId}": {
+      "schema": "transaction",
+      "description": "All operating invoices logged in database"
+    }
+  }
+}

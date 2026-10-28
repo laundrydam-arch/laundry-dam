@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Damdam Laundry - Catatan Pengeluaran Laundry</title>
+    
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#10B981" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa_icon_192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa_icon_512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/pwa_icon_192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/pwa_icon_512.png" />
+    <link rel="shortcut icon" href="/pwa_icon_192.png" type="image/png" />
+
+    <!-- Service Worker Registration with Auto-Update -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js")
+            .then((registration) => {
+              console.log("Service Worker registered with scope:", registration.scope);
+              
+              // Force checking for update on registration load
+              registration.update();
+              
+              // Listen to update found
+              registration.addEventListener("updatefound", () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener("statechange", () => {
+                    if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                      console.log("New Service Worker state: ready to activate");
+                      window.dispatchEvent(new CustomEvent("app-system-update-found"));
+                    }
+                  });
+                }
+              });
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
+            });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

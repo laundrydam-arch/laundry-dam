@@ -1,0 +1,11 @@
+{
+  "name": "Damdam Laundry",
+  "description": "Aplikasi pencatatan dan analisis pengeluaran operasional usaha laundry dengan dukungan AI.",
+  "requestFramePermissions": [
+    "geolocation",
+    "bluetooth"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

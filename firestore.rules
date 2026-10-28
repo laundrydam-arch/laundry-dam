@@ -1,0 +1,145 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global secure helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && (request.auth.token.email_verified == true);
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidCategoryName(name) {
+      return name is string && name.size() > 0 && name.size() <= 128 && !name.matches('.*__.*');
+    }
+
+    // Expense validation schema enforcer
+    function isValidExpense(exp) {
+      return exp.keys().hasAll(['id', 'title', 'amount', 'category', 'date', 'paymentMethod', 'userId'])
+        && exp.keys().size() <= 10
+        && exp.id is string && exp.id.size() <= 100
+        && exp.title is string && exp.title.size() > 0 && exp.title.size() <= 200
+        && (exp.amount is int || exp.amount is float) && exp.amount >= 0
+        && exp.category is string && exp.category.size() <= 100
+        && (!exp.keys().hasAny(['subCategory']) || (exp.subCategory is string && exp.subCategory.size() <= 100))
+        && (!exp.keys().hasAny(['notes']) || (exp.notes is string && exp.notes.size() <= 1000))
+        && exp.date is string && exp.date.matches('^\\d{4}-\\d{2}-\\d{2}$')
+        && exp.paymentMethod is string && exp.paymentMethod.size() <= 50
+        && exp.userId == request.auth.uid;
+    }
+
+    // Category validation schema enforcer
+    function isValidCategory(cat) {
+      return cat.keys().hasAll(['name', 'color', 'bgColor', 'userId'])
+        && cat.keys().size() <= 7
+        && cat.name is string && cat.name.size() > 0 && cat.name.size() <= 100
+        && cat.color is string && cat.color.size() <= 30
+        && cat.bgColor is string && cat.bgColor.size() <= 100
+        && (!cat.keys().hasAny(['icon']) || (cat.icon is string && cat.icon.size() <= 100))
+        && (!cat.keys().hasAny(['subCategories']) || (cat.subCategories is list))
+        && cat.userId == request.auth.uid;
+    }
+
+    // User validation schema enforcer
+    function isValidUser(usr) {
+      return usr.keys().hasAll(['uid', 'email'])
+        && usr.uid == request.auth.uid
+        && usr.email is string && usr.email.size() <= 255
+        && (!usr.keys().hasAny(['displayName']) || (usr.displayName is string && usr.displayName.size() <= 255))
+        && (!usr.keys().hasAny(['photoURL']) || (usr.photoURL is string && usr.photoURL.size() <= 3000))
+        && (!usr.keys().hasAny(['lastActive']) || (usr.lastActive is string && usr.lastActive.size() <= 128));
+    }
+
+    // Sandbox friendly access policies
+    match /users/{userId} {
+      allow read, write: if true;
+      
+      match /{allPaths=**} {
+        allow read, write: if true;
+      }
+    }
+
+    match /users/{userId}/expenses/{expenseId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/categories/{categoryName} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/settings/{settingId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /{path=**}/karyawan/{karyawanId} {
+      allow read: if true; // Allow collectionGroup queries for employee login
+    }
+
+    match /users/{userId}/karyawan/{karyawanId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /{path=**}/admins/{adminId} {
+      allow read: if true; // Allow collectionGroup queries for admin login
+    }
+
+    match /users/{userId}/admins/{adminId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/absensi/{absensiId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/izin/{izinId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/customers/{customerId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/services/{serviceId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/transactions/{transactionId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/parfum/{parfumId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/reminders/{reminderId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/pencairan_bonus/{disbursementId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/kasbon_history/{historyId} {
+      allow read, create, update, delete: if true;
+    }
+
+    match /users/{userId}/potongan_gaji/{potonganId} {
+      allow read, create, update, delete: if true;
+    }
+  }
+}

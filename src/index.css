@@ -1,0 +1,485 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-zinc-350: #b4b4bb;
+  --color-zinc-550: #6b7280;
+  --color-zinc-355: #a1a1aa;
+  --color-zinc-450: #888890;
+}
+
+html, body, #root {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  touch-action: pan-y;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0A0A0B;
+  color: #F4F4F5;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   SOLID LIGHT MODE OVERRIDES
+   Dynamically overrides tailwind arbitrary color classes based on body.light-theme
+   ========================================================================== */
+
+body.light-theme {
+  background-color: #E2E8F0;
+  color: #0F172A;
+}
+
+/* Outer sandbox/frame and body overrides */
+body.light-theme [class*="bg-slate-900"] {
+  background-color: #F1F5F9 !important; /* light slate outer */
+}
+
+/* Main dark charcoal/blank margins & device simulated backgrounds */
+body.light-theme [class*="bg-[#0A0A0B]" i],
+body.light-theme [class*="bg-[#0C0C0E]" i],
+body.light-theme .bg-\[\#0A0A0B\],
+body.light-theme .bg-\[\#0C0C0E\] {
+  background-color: #F8FAFC !important; /* very soft elegant clean layout background */
+}
+
+/* Card surfaces, top navigation bar, subpanels */
+body.light-theme [class*="bg-[#121214]" i],
+body.light-theme [class*="bg-[#151518]" i],
+body.light-theme [class*="bg-[#18181B]" i],
+body.light-theme [class*="bg-zinc-950"],
+body.light-theme [class*="bg-zinc-900"],
+body.light-theme [class*="bg-[#111112]" i] {
+  background-color: #FFFFFF !important; /* solid white card layers */
+}
+
+/* Inputs, dropdowns, and form items */
+body.light-theme [class*="bg-zinc-850"],
+body.light-theme [class*="bg-[#161617]" i],
+body.light-theme [class*="bg-[#1C1C1E]" i],
+body.light-theme [class*="bg-[#131315]" i],
+body.light-theme [class*="bg-zinc-800"] {
+  background-color: #F1F5F9 !important; /* light gray container items */
+}
+
+body.light-theme [class*="bg-[#0A0A0B]/98" i],
+body.light-theme [class*="bg-[#0A0A0B]/90" i] {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Border overrides */
+body.light-theme [class*="border-[#27272A]" i],
+body.light-theme [class*="border-[#18181b]" i],
+body.light-theme [class*="border-zinc-800"],
+body.light-theme [class*="border-zinc-850"],
+body.light-theme [class*="border-zinc-900"],
+body.light-theme [class*="divide-zinc-900"] {
+  border-color: #CBD5E1 !important; /* clear clean light gray outline */
+}
+
+/* Text overrides (near-white to slate-900 primary) */
+body.light-theme [class*="text-white"],
+body.light-theme [class*="text-[#F4F4F5]" i],
+body.light-theme [class*="text-zinc-100"],
+body.light-theme [class*="text-zinc-200"] {
+  color: #0F172A !important; /* deep slate-900 for dark texts */
+}
+
+/* Secondary darker gray labels */
+body.light-theme [class*="text-zinc-300"],
+body.light-theme [class*="text-zinc-350"],
+body.light-theme [class*="text-zinc-355"] {
+  color: #1E293B !important; /* slate-800 */
+}
+body.light-theme [class*="text-zinc-400"],
+body.light-theme [class*="text-zinc-450"] {
+  color: #475569 !important; /* slate-600 */
+}
+body.light-theme [class*="text-zinc-500"],
+body.light-theme [class*="text-zinc-550"] {
+  color: #64748B !important; /* slate-500 helper messages */
+}
+
+/* Inputs element content */
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea,
+body.light-theme option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+body.light-theme input::placeholder,
+body.light-theme textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* ==========================================================================
+   Badge highlights and state status alerts (Antrian, Proses, Selesai, Diambil, Batal)
+   ========================================================================== */
+
+/* 1. Emerald states: Selesai / Lunas */
+body.light-theme [class*="bg-emerald-950"],
+body.light-theme [class*="bg-green-650"],
+body.light-theme [class*="bg-green-600/10"] {
+  background-color: #DCFCE7 !important; /* light fresh green bg */
+  color: #15803D !important;
+  border-color: #A7F3D0 !important;
+}
+body.light-theme [class*="text-emerald-400"],
+body.light-theme [class*="text-emerald-450"],
+body.light-theme [class*="text-green-400"] {
+  color: #15803D !important; /* deep rich emerald */
+}
+body.light-theme [class*="border-emerald-900"],
+body.light-theme [class*="border-emerald-950"] {
+  border-color: #A7F3D0 !important;
+}
+
+/* 2. Indigo states: Proses */
+body.light-theme [class*="bg-indigo-950"],
+body.light-theme [class*="bg-indigo-900"] {
+  background-color: #EEF2FF !important; /* light soft indigo/blue bg */
+  color: #4338CA !important;
+  border-color: #C7D2FE !important;
+}
+body.light-theme [class*="text-indigo-400"],
+body.light-theme [class*="text-indigo-500"] {
+  color: #4338CA !important; /* deep rich high-contrast indigo */
+}
+body.light-theme [class*="border-indigo-900"] {
+  border-color: #C7D2FE !important;
+}
+
+/* 3. Amber states: Antrian / DP */
+body.light-theme [class*="bg-amber-950"],
+body.light-theme [class*="bg-amber-600/10"],
+body.light-theme [class*="bg-[#1A1108]" i] {
+  background-color: #FEF3C7 !important; /* light warm amber bg */
+  color: #92400E !important;
+  border-color: #FDE68A !important;
+}
+body.light-theme [class*="text-amber-400"],
+body.light-theme [class*="text-amber-500"] {
+  color: #B45309 !important; /* deep amber-brown */
+}
+body.light-theme [class*="border-amber-900"] {
+  border-color: #FDE68A !important;
+}
+
+/* 4. Red states: Batal / Belum Lunas */
+body.light-theme [class*="bg-red-950"],
+body.light-theme [class*="bg-red-650"],
+body.light-theme [class*="bg-red-600/10"],
+body.light-theme [class*="bg-red-500/20"] {
+  background-color: #FEE2E2 !important; /* soft red bg */
+  color: #B91C1C !important;
+  border-color: #FCA5A5 !important;
+}
+body.light-theme [class*="text-rose-400"],
+body.light-theme [class*="text-rose-500"] {
+  color: #B91C1C !important; /* deep red */
+}
+body.light-theme [class*="border-red-900"],
+body.light-theme [class*="border-red-950"] {
+  border-color: #FCA5A5 !important;
+}
+
+/* 5. Blue / Gray states: Diambil */
+body.light-theme [class*="bg-zinc-950/40"] {
+  background-color: #EFF6FF !important; /* sweet sky blue bg */
+  color: #1D4ED8 !important;
+  border-color: #BFDBFE !important;
+}
+body.light-theme [class*="text-blue-400"],
+body.light-theme [class*="text-blue-500"] {
+  color: #1D4ED8 !important; /* vivid high-contrast blue */
+}
+body.light-theme [class*="border-blue-900"] {
+  border-color: #BFDBFE !important;
+}
+
+/* 6. Cyan / Teal / Sky Report Banner and Sub-tabs elements */
+body.light-theme [class*="bg-[#0e7490]/15" i] {
+  background-color: #ECFEFF !important; /* cyan-50, extremely clear soft background */
+  border-color: #A5F3FC !important; /* cyan-200 high-contrast border */
+}
+body.light-theme [class*="text-[#22D3EE]" i] {
+  color: #0891B2 !important; /* cyan-600, professional text color on light bg */
+}
+body.light-theme [class*="text-cyan-400"] {
+  color: #0369A1 !important; /* high contrast sky-700 blue */
+}
+body.light-theme [class*="bg-[#0284C7]/20" i] {
+  background-color: #E0F2FE !important; /* sky-100 high readability hover/active */
+}
+body.light-theme [class*="text-[#0284C7]" i] {
+  color: #0369A1 !important; /* high-contrast dark blue text */
+}
+body.light-theme [class*="border-[#0284C7]" i] {
+  border-color: #0284C7 !important;
+}
+body.light-theme [class*="border-[#0e7490]/25" i] {
+  border-color: #A5F3FC !important;
+}
+
+/* Force standard dark headers for quick items inside lists to stay coherent */
+body.light-theme [class*="hover:bg-zinc-900"]:hover {
+  background-color: #F8FAFC !important;
+}
+
+body.light-theme [class*="hover:bg-zinc-850"]:hover {
+  background-color: #F1F5F9 !important;
+}
+
+body.light-theme [class*="hover:bg-emerald-950/40"]:hover {
+  background-color: #DCFCE7 !important;
+}
+
+/* Date calendar inputs behavior */
+body.light-theme input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none !important; /* normal dark color */
+  opacity: 0.65;
+}
+
+/* Scrollbar adjustment for light mode */
+body.light-theme ::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+body.light-theme ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: #10B981;
+}
+
+/* Custom modern scrollbar for black/emerald aesthetic */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10B981;
+}
+
+/* Custom subtle animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Make native browser calendar picker indicator icon fully visible, bright, and clickable in Dark Theme */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(100%) saturate(1000%) hue-rotate(110deg); /* emerald-ish/bright green hue on dark bg */
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.1s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  filter: invert(0.9) sepia(100%) saturate(1500%) hue-rotate(110deg);
+}
+
+/* ==========================================================================
+   Receipt/Penanda Label Simulation (Dibuat Putih Seperti Kertas Thermal Fisik)
+   ========================================================================== */
+.print-preview-paper {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+/* Ensure all nested elements inside receipt always have clear, legible text colors (black thermal ink imitation) */
+.print-preview-paper * {
+  /* Prevent background-color overrides from global dark components */
+  background-color: transparent !important;
+}
+
+.print-preview-paper span,
+.print-preview-paper p,
+.print-preview-paper div {
+  color: #1E293B !important; /* deep charcoal primary instead of white */
+}
+
+/* Primary focus display text (like Customer Name, Store Name, Totals) */
+.print-preview-paper h1,
+.print-preview-paper h2,
+.print-preview-paper .text-white,
+.print-preview-paper .text-\[\#F4F4F5\] {
+  color: #0F172A !important; /* bold elegant near-black slate-900 */
+}
+
+/* Secondary label elements keys */
+.print-preview-paper .text-zinc-500,
+.print-preview-paper .text-zinc-400,
+.print-preview-paper .text-zinc-350 {
+  color: #475569 !important; /* mid-slate text */
+}
+
+/* Values and mono text tags */
+.print-preview-paper .text-zinc-300,
+.print-preview-paper .text-zinc-250,
+.print-preview-paper .text-zinc-200 {
+  color: #1E293B !important; /* deep slate-800 text */
+}
+
+/* Dashed divider styling */
+.print-preview-paper .text-zinc-605,
+.print-preview-paper .text-zinc-650 {
+  color: #64748B !important; /* readable gray-500 for divider dots/dashes */
+}
+
+/* High visibility accent status colors adapted for white background */
+.print-preview-paper .text-amber-500\/90,
+.print-preview-paper .text-amber-400,
+.print-preview-paper .text-amber-500 {
+  color: #D97706 !important; /* warm brown-amber-600 */
+}
+
+.print-preview-paper .text-emerald-450,
+.print-preview-paper .text-emerald-400,
+.print-preview-paper .text-emerald-400\/90 {
+  color: #16A34A !important; /* rich dark green-600 */
+}
+
+.print-preview-paper .text-red-400,
+.print-preview-paper .text-rose-500,
+.print-preview-paper .text-red-500 {
+  color: #DC2626 !important; /* bold bright red-600 */
+}
+
+.print-preview-paper .text-yellow-500 {
+  color: #D97706 !important; /* reddish brown-amber */
+}
+
+/* Light clean borders for nested boxes and dividers list */
+.print-preview-paper [class*="border"] {
+  border-color: #E2E8F0 !important; /* clean light-gray lines */
+}
+
+/* ==========================================================================
+   Smartphone Simulator Screen Light Mode Style
+   ========================================================================== */
+body.light-theme .phone-mockup-frame {
+  border-color: #CBD5E1 !important; /* soft elegant silver tablet bezel */
+  background-color: #E2E8F0 !important;
+}
+
+body.light-theme .phone-mockup-statusbar {
+  background-color: #F8FAFC !important; /* clean soft white background */
+  color: #475569 !important; /* dark slate font for carrier and battery indicators */
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+/* Ensure wifi/battery micro icons inside status bar are high-contrast dark in light theme */
+body.light-theme .phone-mockup-statusbar p,
+body.light-theme .phone-mockup-statusbar span,
+body.light-theme .phone-mockup-statusbar .text-zinc-400 {
+  color: #475569 !important;
+}
+body.light-theme .phone-mockup-statusbar svg {
+  color: #475569 !important;
+}
+body.light-theme .phone-mockup-statusbar .bg-emerald-950 {
+  background-color: #DCFCE7 !important;
+  color: #15803D !important;
+  border-color: #A7F3D0 !important;
+}
+
+body.light-theme .phone-mockup-navbar {
+  background-color: #FFFFFF !important; /* solid white screen background */
+  border-bottom-color: #E2E8F0 !important; /* soft divider line instead of heavy zinc-900 */
+}
+
+body.light-theme .phone-mockup-navbar h1,
+body.light-theme .phone-mockup-navbar span {
+  color: #0F172A !important; /* near-black title */
+  font-weight: 900 !important;
+}
+
+body.light-theme .phone-mockup-navbar button,
+body.light-theme .phone-mockup-navbar svg {
+  color: #0F172A !important; /* near-black interactive chevrons */
+}
+
+/* ==========================================================================
+   PRINT MEDIA STYLE DEFINITIONS (FOR WEB PRINT & AIRPRINT FALLBACKS ON iOS)
+   ========================================================================== */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Hide the entire React application container */
+  #root, .no-print {
+    display: none !important;
+  }
+  
+  /* Display only our generated print section */
+  #web-print-target {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 58mm !important; /* Standard thermal width layout */
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  /* Page margins preset for compact receipt printers */
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+}
+
+/* Remove black outline/focus box on Recharts elements */
+.recharts-wrapper *:focus,
+.recharts-wrapper *:active,
+.recharts-wrapper *,
+.recharts-bar-rectangle,
+.recharts-rectangle {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+
+
+
